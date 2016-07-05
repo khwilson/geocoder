@@ -9,6 +9,7 @@ click==6.6
 colorama==0.3.7           # via pylint
 cov-core==1.13.0          # via pytest-cov
 coverage==3.7.1           # via cov-core
+enum34==1.1.6
 lazy-object-proxy==1.2.2  # via astroid
 mock==1.0.1
 psycopg2==2.6.1
@@ -18,5 +19,5 @@ pytest-cov==1.7.0
 pytest==2.8.7
 pyyaml==3.11
 requests==2.10.0
-six==1.10.0               # via astroid, pylint
+six==1.10.0
 wrapt==1.10.8             # via astroid
