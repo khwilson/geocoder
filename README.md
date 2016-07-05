@@ -27,7 +27,7 @@ ADDRESS,CITY,STATE,ZIP
 
 of the addresses you want to geocode. Then simply call
 
-```python
+```bash
 geocode geocode keys input --ouput-file output
 ```
 
