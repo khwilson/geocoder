@@ -27,11 +27,21 @@ def normalize_address(address):
     return address
 
 
-def get_url(key, address, city, state, zip_code, return_type=RETURN_TYPE.JSON):
+def normalize_full_address(address, city, state, zip_code):
+    address = google.normalize_address(address)
+    city = google.normalize_city(city)
+    state = google.normalize_state(state)
+    zip_code = google.normalize_zip_code(zip_code)
+    full_address = '{address}, {city}, {state} {zip_code}'.format(
+        address=address, city=city, state=state, zip_code=zip_code)
+    return full_address
+
+
+def get_url(key, full_address, return_type=RETURN_TYPE.JSON):
     """Return a URL to geocode the passed address.
 
     :param str key: Your api key
-    :param str address: The street address you want to geocode
+    :param str full_address: The street address you want to geocode
     :param str city: The city of the address you want to geocode
     :param str state: The state (two characters like KY) of the address
         you want to geocode
@@ -40,8 +50,6 @@ def get_url(key, address, city, state, zip_code, return_type=RETURN_TYPE.JSON):
     :return: The url for geocoding
     :rtype: str
     """
-    full_address = '{address}, {city}, {state} {zip_code}'.format(
-        address=address, city=city, state=state, zip_code=zip_code)
     url = urllib.parse.urljoin(GOOGLE_GEOCODE_URL, return_type.value)
-    url += '?' + urllib.parse.urlencode({'address': full_address, key=key})
+    url += '?' + urllib.parse.urlencode({'address': full_address, 'key': key})
     return url
