@@ -1,9 +1,18 @@
 Geocoder
 --------
 
+[![Build Status](https://travis-ci.org/khwilson/geocoder.svg?branch=master)](https://travis-ci.org/khwilson/geocoder)
+
 This package provides a simple way of polling Google's geocoding API.
 In particular, it's useful when you have a *lot* of queries to make
 and you'll need to use multiple API keys to code them.
+
+Requirements
+============
+
+Tested with Python 2.7, 3.3, 3.4, and 3.5. All other requirements in `requirements.in`.
+
+Note I only guarantee Python 3.5 support into the future because futures are awesome.
 
 How to use
 ==========
