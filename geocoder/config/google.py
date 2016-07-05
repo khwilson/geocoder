@@ -10,7 +10,7 @@ class GoogleApiKeyReader(object):
         self.f = io.open(filename, 'r')
 
     def __enter__(self):
-        return self.f.close()
+        return self.f
 
     def __exit__(self, *args):
         self.f.close()
