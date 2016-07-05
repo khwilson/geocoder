@@ -28,10 +28,10 @@ def normalize_address(address):
 
 
 def normalize_full_address(address, city, state, zip_code):
-    address = google.normalize_address(address)
-    city = google.normalize_city(city)
-    state = google.normalize_state(state)
-    zip_code = google.normalize_zip_code(zip_code)
+    address = normalize_address(address)
+    city = normalize_address(city)
+    state = normalize_address(state)
+    zip_code = normalize_address(zip_code)
     full_address = '{address}, {city}, {state} {zip_code}'.format(
         address=address, city=city, state=state, zip_code=zip_code)
     return full_address

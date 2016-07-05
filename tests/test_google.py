@@ -9,6 +9,12 @@ def test_normalize_address():
            google.normalize_address('123   somewhere sTReet, nowhere, ny   19282')
 
 
+def test_normalize_full_address():
+    """ Do a simple teset of the address normalization """
+    assert google.normalize_full_address('123 Somewhere Street', 'Nowhere', '  NY', '19282  ') == \
+           google.normalize_full_address('123   somewhere sTReet', 'nowhere', 'ny ', '  19282')
+
+
 def test_get_url():
     """ Do some basic testing that the url is approximately well-formed """
     url = google.get_url('my key', '123 Somewhere Street, Nowhere, NY 12345')
