@@ -1,6 +1,12 @@
 import os
 
-from geocoder.cache import Cache
+from geocoder.cache import AlwaysEmptyDict, Cache
+
+def test_always_empty_dict():
+    d = AlwaysEmptyDict()
+    d['asdf'] = 10
+    assert d.get('asdf') is None
+    assert len(d) == 0
 
 
 def test_no_cache():

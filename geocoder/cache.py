@@ -1,7 +1,23 @@
+from collections import Mapping
+
 import json
 import os
 
 from geocoder.compat import UnicodeCsvReader, UnicodeCsvWriter
+
+
+class AlwaysEmptyDict(Mapping):
+    def __getitem__(self, key):
+        raise KeyError
+
+    def __setitem__(self, key, value):
+        return
+
+    def __iter__(self):
+        return iter([])
+
+    def __len__(self):
+        return 0
 
 
 def read_cache(cache_file):
@@ -14,7 +30,7 @@ def read_cache(cache_file):
     :rtype: dict[str, dict]
     """
     if not cache_file:
-        return {}
+        return AlwaysEmptyDict()
 
     with UnicodeCsvReader(cache_file) as reader:
         return {key: json.loads(value) for key, value in reader}
