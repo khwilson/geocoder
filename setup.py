@@ -32,7 +32,7 @@ setup(
     url="https://github.com/khwilson/geocoder",
     author="Kevin Wilson",
     author_email="khwilson@gmail.com",
-    license="Proprietary",
+    license="Apache v2.0",
     packages=find_packages(),
     package_data={'geocoder': ['VERSION']},
     install_requires=parse_requirements('requirements.in'),
