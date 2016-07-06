@@ -1,8 +1,6 @@
 from __future__ import unicode_literals
 
 import os
-import shutil
-import tempfile
 
 from geocoder.compat import UnicodeCsvReader, UnicodeCsvWriter
 

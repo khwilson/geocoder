@@ -3,7 +3,6 @@ from __future__ import print_function
 import io
 import os
 import random
-import string
 
 import pytest
 

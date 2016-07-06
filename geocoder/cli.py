@@ -1,8 +1,3 @@
-import codecs
-from contextlib import contextmanager
-import csv
-import gzip
-import io
 import json
 import sys
 
@@ -38,7 +33,7 @@ def get_with_retry(url, start_wait=1, wait_exponent=2, num_tries=3):
         if response.ok:
             return response.json()
         wait *= wait_exponent
-    raise TooManyRetries("Too many retries for url {}".format(url), status_code)
+    raise TooManyRetries("Too many retries for url {}".format(url), response.status_code)
 
 
 @click.group()
@@ -74,7 +69,7 @@ def geocode_command(credentials_file, input_file, output_file, cache):
                     url = google.get_url(key, full_address)
                     try:
                         value = get_with_retry(url)
-                    except TooManyRetries as exc:
+                    except TooManyRetries:
                         click.echo("Too many retries while getting {}".format(url))
                         click.echo("Exiting....")
                         sys.exit(1)

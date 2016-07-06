@@ -6,13 +6,13 @@ from geocoder import google
 def test_normalize_address():
     """ Do a simple teset of the address normalization """
     assert google.normalize_address('123 Somewhere Street, Nowhere, NY 19282') == \
-           google.normalize_address('123   somewhere sTReet, nowhere, ny   19282')
+        google.normalize_address('123   somewhere sTReet, nowhere, ny   19282')
 
 
 def test_normalize_full_address():
     """ Do a simple teset of the address normalization """
     assert google.normalize_full_address('123 Somewhere Street', 'Nowhere', '  NY', '19282  ') == \
-           google.normalize_full_address('123   somewhere sTReet', 'nowhere', 'ny ', '  19282')
+        google.normalize_full_address('123   somewhere sTReet', 'nowhere', 'ny ', '  19282')
 
 
 def test_get_url():

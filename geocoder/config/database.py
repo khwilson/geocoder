@@ -17,13 +17,13 @@ def read_config(config_file):
         if not all(field in config for field in REQUIRED_POSTGRES_FIELDS):
             raise ValueError("postgres config objects must have at least the "
                              "following fields: {}".format(
-                             ', '.join(REQUIRED_POSTGRES_FIELDS)))
+                                ', '.join(REQUIRED_POSTGRES_FIELDS)))
     elif config['dialect'] == 'sqlite':
         dialect = sqlite3
         if not all(field in config for field in REQUIRED_SQLITE_FIELDS):
             raise ValueError("sqlite config objects must have at least the "
                              "following fields: {}".format(
-                             ', '.join(REQUIRED_SQLITE_FIELDS)))
+                                ', '.join(REQUIRED_SQLITE_FIELDS)))
     else:
         raise NotImplementedError
 

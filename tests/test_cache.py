@@ -2,6 +2,7 @@ import os
 
 from geocoder.cache import AlwaysEmptyDict, Cache
 
+
 def test_always_empty_dict():
     d = AlwaysEmptyDict()
     d['asdf'] = 10
@@ -28,4 +29,3 @@ def test_write_and_read_cache(tempdir):
             'a': {'foo': 1, 'bar': 2},
             'b': {'boo': 3, 'baz': 4}
         }
-

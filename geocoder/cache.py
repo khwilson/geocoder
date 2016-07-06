@@ -67,5 +67,3 @@ class Cache(object):
 
     def __exit__(self, *args):
         write_cache(self.cache, self.cache_file)
-
-
