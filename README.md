@@ -1,5 +1,4 @@
-Geocoder
---------
+# Geocoder
 
 [![Build Status](https://travis-ci.org/khwilson/geocoder.svg?branch=master)](https://travis-ci.org/khwilson/geocoder)
 
@@ -7,15 +6,13 @@ This package provides a simple way of polling Google's geocoding API.
 In particular, it's useful when you have a *lot* of queries to make
 and you'll need to use multiple API keys to code them.
 
-Requirements
-============
+## Requirements
 
 Tested with Python 2.7, 3.3, 3.4, and 3.5. All other requirements in `requirements.in`.
 
 Note I only guarantee Python 3.5 support into the future because futures are awesome.
 
-How to use
-==========
+## How to use
 
 Install with
 
@@ -42,8 +39,7 @@ geocode geocode keys input --ouput-file output
 
 If you don't specify `output-file`, then it will print to standard out.
 
-What do you get?
-================
+## What do you get?
 
 The output is quite raw. In particular, for every row that you have in your `input` file,
 you get a row in the `output` file. This is a csv whose first column is somewhat normalized
@@ -51,15 +47,13 @@ version of the address in the input and whose second column is just the json tha
 Google API returns. Further processing can be added through modifying the `geocoder/cli.py`
 module or by postprocessing.
 
-Caching
-=======
+## Caching
 
 If you are expecting a *lot* of duplicate addresses in your runs, then you may want to
 cache your results from the API. This can be done by specifying a `--cache-file`. The
 key to the cache is the semi-normalized address (so nothing fancy).
 
-Warning
-=======
+## Warning
 
 This is not meant to be a super smart implementation. In particular, the cache is in memory
 and so if you have lots of addresses to geocode, you probably want to change that.
