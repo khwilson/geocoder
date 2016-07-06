@@ -12,7 +12,6 @@ import requests
 from geocoder import google
 from geocoder.cache import Cache
 from geocoder.compat import UnicodeCsvReader, UnicodeCsvWriter
-from geocoder.util import FileOrStdout
 
 
 class TooManyRetries(Exception):
