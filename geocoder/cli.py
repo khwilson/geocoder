@@ -57,33 +57,37 @@ def geocode_command(credentials_file, input_file, output_file, cache):
     key_iter = iter(credentials)
     key = next(key_iter)
 
+    with UnicodeCsvReader(input_file) as input:
+        num_rows = sum(1 for _ in input)
+
     with UnicodeCsvReader(input_file) as input, UnicodeCsvWriter(output_file) as output, \
             Cache(cache) as cache:
-        for address, city, state, zip_code in input:
-            full_address = google.normalize_full_address(address, city, state, zip_code)
-            value = cache.get(full_address)
-
-            # If the value is not in the cache, query the API
-            if not value:
-                while True:  # Used to loop over API keys
-                    url = google.get_url(key, full_address)
-                    try:
-                        value = get_with_retry(url)
-                    except TooManyRetries:
-                        click.echo("Too many retries while getting {}".format(url))
-                        click.echo("Exiting....")
-                        sys.exit(1)
-                    if value['status'] == 'OVER_QUERY_LIMIT':
+        with click.progressbar(input, label="Geocoding...", length=num_rows) as pb:
+            for address, city, state, zip_code in pb:
+                full_address = google.normalize_full_address(address, city, state, zip_code)
+                value = cache.get(full_address)
+    
+                # If the value is not in the cache, query the API
+                if not value:
+                    while True:  # Used to loop over API keys
+                        url = google.get_url(key, full_address)
                         try:
-                            key = next(key_iter)
-                        except StopIteration:
-                            click.echo("Ran out of keys!")
+                            value = get_with_retry(url)
+                        except TooManyRetries:
+                            click.echo("Too many retries while getting {}".format(url))
                             click.echo("Exiting....")
                             sys.exit(1)
-                        continue
-                    cache[full_address] = value
-                    break
-            output.writerow([full_address, json.dumps(value)])
+                        if value['status'] == 'OVER_QUERY_LIMIT':
+                            try:
+                                key = next(key_iter)
+                            except StopIteration:
+                                click.echo("Ran out of keys!")
+                                click.echo("Exiting....")
+                                sys.exit(1)
+                            continue
+                        cache[full_address] = value
+                        break
+                output.writerow([full_address, json.dumps(value)])
 
 
 if __name__ == '__main__':
