@@ -77,7 +77,9 @@ def geocode_command(credentials_file, input_file, output_file, cache):
                             click.echo("Too many retries while getting {}".format(url))
                             click.echo("Exiting....")
                             sys.exit(1)
-                        if value['status'] == 'OVER_QUERY_LIMIT':
+                        if value['status'] in ('OVER_QUERY_LIMIT', 'REQUEST_DENIED'):
+                            if value['status'] == 'REQUEST_DENIED':
+                                click.echo("Denied request while using key {}".format(key))
                             try:
                                 key = next(key_iter)
                             except StopIteration:
