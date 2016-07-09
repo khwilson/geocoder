@@ -1,6 +1,7 @@
 import enum
 import re
 
+import requests
 from six.moves import urllib
 
 
@@ -53,3 +54,67 @@ def get_url(key, full_address, return_type=RETURN_TYPE.JSON):
     url = urllib.parse.urljoin(GOOGLE_GEOCODE_URL, return_type.value)
     url += '?' + urllib.parse.urlencode({'address': full_address, 'key': key})
     return url
+
+
+class TooManyRetries(Exception):
+    def __init__(self, msg, status_code):
+        super(TooManyRetries, self).__init__(msg)
+        self.status_code = status_code
+
+
+class OutOfKeys(Exception):
+    pass
+
+
+def get_with_retry(url, start_wait=1, wait_exponent=2, num_tries=3):
+    """Get a URL but perform exponential backoff if a non good status code is returned
+    Note that we assume the content is JSON.
+
+    :param str url: The URL to retreive
+    :param float start_wait: The first waiting time on an unsuccessful get
+    :param float wait_exponent: The exponent between waiting times
+    :param int num_tries: The number of times to retry before giving up
+    :raises TooManyRetries: If we run out of retries
+    :return: The response content (assumed JSON) as a dict
+    :rtype: dict
+    """
+    wait = start_wait
+    for try_num in range(num_tries):
+        response = requests.get(url)
+        if response.ok:
+            return response.json()
+        wait *= wait_exponent
+    raise TooManyRetries("Too many retries for url {}".format(url), response.status_code)
+
+
+class RequestManger(object):
+    """A little wrapper that manages keys and resolving addresses"""
+
+    def __init__(self, keys):
+        """
+        :param list[str] keys: The Geocoding API keys you wish to use
+        """
+        self.keys = keys
+        self.key_iter = iter(keys)
+        self.key = next(self.key_iter)
+
+    def resolve(self, address):
+        """Resolve an address with the Google API
+
+        :return: The JSON that is returned by the API
+        :rtype: dict
+        :raises OutOfKeys: If we have run out API keys for the day
+        :raises TooManyRetries: If we have retried the call too many times
+        """
+        while True:  # Used to iterate over keys
+            url = get_url(key, address)
+            value = get_with_retry(url)
+            if value['status'] in ('OVER_QUERY_LIMIT', 'REQUEST_DENIED'):
+                if value['status'] == 'REQUEST_DENIED':
+                    click.echo("Denied request while using key ...{}. "
+                               "Moving to next key.".format(key[-4:]))
+                try:
+                    key = next(key_iter)
+                except StopIteration:
+                    raise OutOfKeys
+                continue
