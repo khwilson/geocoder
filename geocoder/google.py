@@ -107,14 +107,11 @@ class RequestManger(object):
         :raises TooManyRetries: If we have retried the call too many times
         """
         while True:  # Used to iterate over keys
-            url = get_url(key, address)
+            url = get_url(self.key, address)
             value = get_with_retry(url)
             if value['status'] in ('OVER_QUERY_LIMIT', 'REQUEST_DENIED'):
-                if value['status'] == 'REQUEST_DENIED':
-                    click.echo("Denied request while using key ...{}. "
-                               "Moving to next key.".format(key[-4:]))
                 try:
-                    key = next(key_iter)
+                    self.key = next(self.key_iter)
                 except StopIteration:
                     raise OutOfKeys
                 continue

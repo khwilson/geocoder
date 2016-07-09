@@ -37,13 +37,13 @@ def geocode_command(credentials_file, input_file, output_file, cache):
             for address, city, state, zip_code in pb:
                 full_address = google.normalize_full_address(address, city, state, zip_code)
                 value = cache.get(full_address)
-    
+
                 # If the value is not in the cache, query the API
                 if not value:
                     try:
                         value = manager.resolve(full_address)
                     except google.TooManyRetries:
-                        click.echo("Too many retries while getting {}".format(url))
+                        click.echo("Too many retries while getting {}".format(full_address))
                         click.echo("Exiting....")
                         sys.exit(1)
                     except google.OutOfKeys:
