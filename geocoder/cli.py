@@ -113,9 +113,7 @@ def fixup_command(credentials_file, input_file, output_file):
                                             json.dumps(value, indent=2))
                         edited = edited.rsplit(marker, 1)[0].strip()
                         edited = google.normalize_address(edited)
-                        click.echo("Whoops")
                         value = manager.resolve(edited)
-                        click.echo("Nooops")
                         click.echo(json.dumps(value, indent=2))
                         if click.confirm("Good enough?"):
                             output.writerow([key, edited, json.dumps(value)])
