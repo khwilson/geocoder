@@ -3,9 +3,9 @@ import sys
 
 import click
 
-from geocoder import google
-from geocoder.cache import Cache, read_cache
-from geocoder.compat import UnicodeCsvReader, UnicodeCsvWriter
+from compat_csv import UnicodeCsvReader, UnicodeCsvWriter
+from cache import Cache, read_cache
+import google
 
 
 @click.group()
@@ -119,6 +119,7 @@ def fixup_command(credentials_file, input_file, output_file):
                             output.writerow([key, edited, json.dumps(value)])
                             break
             exclude_keys.update(bad_geocodes.keys())
+
 
 if __name__ == '__main__':
     cli()
