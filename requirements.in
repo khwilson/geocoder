@@ -1,0 +1,8 @@
+click>=2
+psycopg2>=2.5
+pyyaml
+requests
+
+# For reverse compatibility
+enum34
+six
