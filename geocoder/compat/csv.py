@@ -5,6 +5,8 @@ CSV compatibility between Python 2 and 3. Ganked from::
 
 but with added compatibility for gzipped csvs
 """
+from __future__ import absolute_import
+
 import csv
 import gzip
 import sys

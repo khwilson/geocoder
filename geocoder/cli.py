@@ -3,9 +3,9 @@ import sys
 
 import click
 
-from compat_csv import UnicodeCsvReader, UnicodeCsvWriter
-from cache import Cache, read_cache
-import google
+from geocoder.compat.csv import UnicodeCsvReader, UnicodeCsvWriter
+from geocoder.cache import Cache, read_cache
+from geocoder import google
 
 
 @click.group()

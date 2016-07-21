@@ -28,7 +28,7 @@ ADDRESS,CITY,STATE,ZIP
 of the addresses you want to geocode. Then simply call
 
 ```bash
-python3 cli.py geocode keys input --ouput-file geocodings
+python3 -m geocoder.cli geocode keys input --ouput-file geocodings
 ```
 
 If you don't specify `output-file`, then it will print to standard out. The output
@@ -43,7 +43,7 @@ or aren't quite specific enough. You can fix these up after geocoding using the
 `fixup` command:
 
 ```bash
-python3 cli.py fixup keys geocodings --output-file fixed_up
+python3 -m geocoder.cli fixup keys geocodings --output-file fixed_up
 ```
 
 The output will be in the format

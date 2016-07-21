@@ -3,7 +3,7 @@ from collections import Mapping
 import json
 import os
 
-from compat_csv import UnicodeCsvReader, UnicodeCsvWriter
+from geocoder.compat.csv import UnicodeCsvReader, UnicodeCsvWriter
 
 
 class AlwaysEmptyDict(Mapping):
