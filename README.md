@@ -14,13 +14,7 @@ Note I only guarantee Python 3.5 support into the future because futures are awe
 
 ## How to use
 
-Install with
-
-```bash
-pip install -U git+ssh://git@github.com/khwilson/geocoder.git
-```
-
-Once installed, you'll need to create some Google API keys. Do that by going
+You'll need to create some Google API keys. Do that by going
 [here](https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE&reusekey=true).
 
 Put them into a file. We'll call it `keys` for now.
@@ -34,10 +28,29 @@ ADDRESS,CITY,STATE,ZIP
 of the addresses you want to geocode. Then simply call
 
 ```bash
-geocode geocode keys input --ouput-file output
+geocoder geocode keys input --ouput-file geocodings
 ```
 
-If you don't specify `output-file`, then it will print to standard out.
+If you don't specify `output-file`, then it will print to standard out. The output
+will be in the format
+
+```
+INPUT_TO_GOOGLE_API,OUTPUT_OF_GOOGLE_API
+```
+
+Some of your addresses probably won't geocode, e.g., they may have some misspellings
+or aren't quite specific enough. You can fix these up after geocoding using the
+`fixup` command:
+
+```bash
+geocoder fixup keys geocodings --output-file fixed_up
+```
+
+The output will be in the format
+
+```
+ORIGINAL_INPUT_TO_GOOGLE_API,FIXED_UP_INPUT_TO_GOOGLE_API,OUTPUT_OF_GOOGLE_API
+```
 
 ## What do you get?
 

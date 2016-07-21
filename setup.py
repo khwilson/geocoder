@@ -40,7 +40,7 @@ setup(
     description="A little app to pull geocodes from Google's API",
     entry_points="""
     [console_scripts]
-    geocode=geocoder.cli:cli
+    geocoder=geocoder.cli:cli
     """,
     long_description="\n" + readme
 )
