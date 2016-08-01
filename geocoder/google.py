@@ -108,7 +108,6 @@ class RequestManger(object):
         """
         while True:  # Used to iterate over keys
             url = get_url(self.key, address)
-            print(url)
             value = get_with_retry(url)
             if value['status'] in ('OVER_QUERY_LIMIT', 'REQUEST_DENIED'):
                 try:
